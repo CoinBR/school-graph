@@ -5,6 +5,10 @@
  */
 package graph;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Vector;
+
 /**
  *
  * @author coinbr
@@ -43,6 +47,22 @@ public class Vertex {
     public Integer getIndex(){
         return this.graph.getVertexIndex(this);
     }
+    
+    // https://en.wikipedia.org/wiki/Degree_(graph_theory)
+    // In graph theory, the degree (or valency) of a vertex of a graph is the number of edges incident to the vertex, with loops counted twice.
+    
+    
+    public Integer getDegree(){
+      
+        HashSet<Edge> edges = (HashSet<Edge>) this.graph.getEdges(this);
+        
+        Integer degree = 0;
+        for (Edge edge : edges){
+            degree += edge.isLoop() ? 2 : 1;
+        }
+        return degree;        
+    }
+    
 
     
     

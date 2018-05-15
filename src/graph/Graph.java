@@ -273,6 +273,11 @@ public class Graph {
         */
     }
     
+    
+    public Integer getDegree(Vertex v){
+        return v.getDegree();
+    }
+    
     public Collection<Vertex> getAllVertexes(){
         return this.vertexes;
     }

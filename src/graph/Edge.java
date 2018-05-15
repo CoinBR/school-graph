@@ -96,6 +96,10 @@ public class Edge {
     public Boolean isDirected() {
         return _isDirected;
     }
+    
+    public Boolean isLoop(){
+        return this.from == this.to;
+    }
 
     /*
     @Override

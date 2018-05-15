@@ -345,6 +345,54 @@ public class GraphTest {
     }
 
 
+     
+    @org.junit.Test
+    public void testGetVertexDegree() throws NoSuchFieldException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchMethodException{
+        Vertex a = g.addVertex("Abelha");
+        Vertex c = g.addVertex("Cactos");
+        Vertex f = g.addVertex("Feijao");
+        Vertex m = g.addVertex("Mada");
+               
+        Edge e0 = g.addEdge(a, f, 5);
+        Edge e1 = g.addEdge(c, c, 7);
+        Edge e2 = g.addEdge(c, f, 8, true);
+        Edge e3 = g.addEdge(m, a, 30, true);
+        Edge e4 = g.addEdge(a, m, 14, true);        
+        Edge e5 = g.addEdge(a, m, 50);
+
+        g.delEdge(e0);    
+        
+        assert(a.getDegree() == 3);        
+        assert(c.getDegree() == 3);        
+        assert(f.getDegree() == 1);        
+        assert(m.getDegree() == 3);   
+        /*
+        assert(g.toString().equals( "	|	Abelha	Cactos	Feijao	Mada	|\n" +
+                                "------------------------------------------------------------\n" +
+                                "Abelha	|	-	-	-	_14,50	|\n" +
+                                "Cactos	|	-	7	_8	-	|\n" +
+                                "Feijao	|	-	-	-	-	|\n" +
+                                "Mada	|	_30,50	-	-	-	|\n"));   
+*/
+        
+
+        g.delEdge(e2);
+                
+        assert(a.getDegree() == 3);        
+        assert(c.getDegree() == 2);        
+        assert(f.getDegree() == 0);        
+        assert(m.getDegree() == 3);/*
+        assert(g.toString().equals( "	|	Abelha	Cactos	Feijao	Mada	|\n" +
+                                "------------------------------------------------------------\n" +
+                                "Abelha	|	-	-	-	_14,50	|\n" +
+                                "Cactos	|	-	7	-	-	|\n" +
+                                "Feijao	|	-	-	-	-	|\n" +
+                                "Mada	|	_30,50	-	-	-	|\n"));     
+*/
+      
+    }
+
+
 
    
 
