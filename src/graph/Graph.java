@@ -282,6 +282,8 @@ public class Graph {
         return this.vertexes;
     }
     
+
+    
     public Collection<Edge> getAllEdges(){
         HashSet<Edge> edges = new HashSet<Edge>();
         for (int x = 0; x < this.vertexes.size(); x++){
@@ -301,8 +303,22 @@ public class Graph {
         return edge.isDirected();
     }
     
-
-     
+    
+    public Collection<Vertex> getRoute(Vertex from, Vertex to){
+        throw new NotImplementedException();
+    }
+    
+    public Collection<Collection<Vertex>> getAllRoutes(Vertex from){
+        throw new NotImplementedException();
+    }
+        
+    public Collection<DijkstraLink> getRoutesLinks(){
+        throw new NotImplementedException();
+    }
+    
+    public Collection<Collection<DijkstraLink>> getAllRoutesLinks(){
+        throw new NotImplementedException();
+    }
     
     
 }
