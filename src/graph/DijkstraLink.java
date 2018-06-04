@@ -12,49 +12,56 @@ package graph;
 public class DijkstraLink {
     
     private Graph graph;
-    private Vertex from;
-    private Vertex to;
-    private Edge edge;
+    
+    private Vertex vertex;
+    private Vertex previous;
+    private Double cost;
 
-    public DijkstraLink(Graph graph, Vertex from, Vertex to) {
+    public DijkstraLink(Graph graph, Vertex vertex, Vertex previous, Double cost) {
         this.graph = graph;
-        this.from = from;
-        this.to = to;
+        this.vertex = vertex;
+        this.previous = previous;
+        this.cost = cost;
     }
-
-    public DijkstraLink(Graph graph, Vertex from, Vertex to, Edge edge) {
+    
+    
+    public DijkstraLink(Graph graph, Vertex vertex, Vertex previous) {
         this.graph = graph;
-        this.from = from;
-        this.to = to;
-        this.edge = edge;
+        this.vertex = vertex;
+        this.previous = previous;
+        this.cost = Double.POSITIVE_INFINITY;
     }
 
-    public Vertex getFrom() {
-        return from;
+    public Graph getGraph() {
+        return graph;
     }
 
-    public void setFrom(Vertex from) {
-        this.from = from;
+    public void setGraph(Graph graph) {
+        this.graph = graph;
     }
 
-    public Vertex getTo() {
-        return to;
+    public Vertex getVertex() {
+        return vertex;
     }
 
-    public void setTo(Vertex to) {
-        this.to = to;
+    public void setVertex(Vertex vertex) {
+        this.vertex = vertex;
     }
 
-    public Edge getEdge() {
-        return edge;
+    public Vertex getPrevious() {
+        return previous;
     }
 
-    public void setEdge(Edge edge) {
-        this.edge = edge;
+    public void setPrevious(Vertex previous) {
+        this.previous = previous;
     }
-    
-    
-    
-    
+
+    public Double getCost() {
+        return cost;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
+    } 
     
 }

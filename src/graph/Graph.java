@@ -312,11 +312,11 @@ public class Graph {
         throw new NotImplementedException();
     }
         
-    public Collection<DijkstraLink> getRoutesLinks(){
+    public DijkstraLink getRouteLinks(Vertex from, Vertex to){
         throw new NotImplementedException();
     }
     
-    public Collection<Collection<DijkstraLink>> getAllRoutesLinks(){
+    public Collection<DijkstraLink> getAllRoutesLinks(Vertex from){
         throw new NotImplementedException();
     }
     
