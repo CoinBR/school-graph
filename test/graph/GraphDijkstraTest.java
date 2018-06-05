@@ -84,24 +84,25 @@ public class GraphDijkstraTest {
         this.f = this.graph.addVertex(new String("F"));
         this.g = this.graph.addVertex(new String("G"));
         
-	this.graph.addEdge(a, b, 2);
-        this.graph.addEdge(a, c, 5);
-        this.graph.addEdge(a, e, 8);
-        this.graph.addEdge(b, d, 8);
-        this.graph.addEdge(c, e, 2);
-        this.graph.addEdge(c, g, 13);
-        this.graph.addEdge(d, e, 2);
-        this.graph.addEdge(d, f, 4);
-        this.graph.addEdge(f, g , 3);
+	this.graph.addEdge(a, b, 2.0);
+        this.graph.addEdge(a, c, 5.0);
+        this.graph.addEdge(a, e, 8.0);
+        this.graph.addEdge(b, d, 8.0);
+        this.graph.addEdge(c, e, 2.0);
+        this.graph.addEdge(c, g, 13.0);
+        this.graph.addEdge(d, e, 2.0);
+        this.graph.addEdge(d, f, 4.0);
+        this.graph.addEdge(f, g , 3.0);
         
         
-        this.la = new DijkstraLink(graph, a, a, 0.0);
-        this.lb = new DijkstraLink(graph, b, a, 2.0);
-        this.lc = new DijkstraLink(graph, c, a, 5.0);
-        this.le = new DijkstraLink(graph, e, c, 7.0);
-        this.ld = new DijkstraLink(graph, d, e, 9.0);
-        this.lf = new DijkstraLink(graph, f, d, 13.0);
-        this.lg = new DijkstraLink(graph, g, f, 16.0);
+        this.la = new DijkstraLink(graph, a, null, 0.0);
+        this.la.setPrevious(la);
+        this.lb = new DijkstraLink(graph, b, la, 2.0);
+        this.lc = new DijkstraLink(graph, c, la, 5.0);
+        this.le = new DijkstraLink(graph, e, lc, 7.0);
+        this.ld = new DijkstraLink(graph, d, le, 9.0);
+        this.lf = new DijkstraLink(graph, f, ld, 13.0);
+        this.lg = new DijkstraLink(graph, g, lf, 16.0);
         
         this.allLinks = new Vector<DijkstraLink>();
         this.allLinks.add(this.la);
@@ -167,35 +168,36 @@ public class GraphDijkstraTest {
 
     @org.junit.Test
     public void testGetAllRoutes(){
-        assert(this.allRoutes.equals(this.graph.getAllRoutes(this.a)));  
+        assert(this.allRoutes.toString().equals(this.graph.getAllRoutes(this.a).toString()));  
     }
     
     @org.junit.Test
     public void testGetAllRoutesLinks(){
-        assert(this.allLinks.equals(this.graph.getAllRoutesLinks(this.a)));  
+        assert(this.allLinks.toString().equals(this.graph.getAllRoutesLinks(this.a).toString())); 
+
     }
     
     
     @org.junit.Test
-    public void testGetRoute(){
-        assert(this.ra.equals(this.graph.getRoute(this.a, this.a)));
-        assert(this.rb.equals(this.graph.getRoute(this.a, this.b)));
-        assert(this.rc.equals(this.graph.getRoute(this.a, this.c)));
-        assert(this.rd.equals(this.graph.getRoute(this.a, this.d)));
-        assert(this.re.equals(this.graph.getRoute(this.a, this.e)));
-        assert(this.rf.equals(this.graph.getRoute(this.a, this.f)));
-        assert(this.rg.equals(this.graph.getRoute(this.a, this.g)));  
+    public void testGetRoute(){        
+        assert(this.ra.toString().equals(this.graph.getRoute(this.a, this.a).toString()));
+        assert(this.rb.toString().equals(this.graph.getRoute(this.a, this.b).toString()));
+        assert(this.rc.toString().equals(this.graph.getRoute(this.a, this.c).toString()));
+        assert(this.rd.toString().equals(this.graph.getRoute(this.a, this.d).toString()));
+        assert(this.re.toString().equals(this.graph.getRoute(this.a, this.e).toString()));
+        assert(this.rf.toString().equals(this.graph.getRoute(this.a, this.f).toString()));
+        assert(this.rg.toString().equals(this.graph.getRoute(this.a, this.g).toString()));  
     }     
     
     @org.junit.Test
     public void testGetRoutesLinks(){     
-        assert(this.la.equals(this.graph.getRouteLinks(this.a, this.a)));
-        assert(this.lb.equals(this.graph.getRouteLinks(this.a, this.b)));
-        assert(this.lc.equals(this.graph.getRouteLinks(this.a, this.c)));
-        assert(this.ld.equals(this.graph.getRouteLinks(this.a, this.d)));
-        assert(this.le.equals(this.graph.getRouteLinks(this.a, this.e)));
-        assert(this.lf.equals(this.graph.getRouteLinks(this.a, this.f)));        
-        assert(this.lg.equals(this.graph.getRouteLinks(this.a, this.g)));
+        assert(this.la.toString().equals(this.graph.getRouteLinks(this.a, this.a).toString()));
+        assert(this.lb.toString().equals(this.graph.getRouteLinks(this.a, this.b).toString()));
+        assert(this.lc.toString().equals(this.graph.getRouteLinks(this.a, this.c).toString()));
+        assert(this.ld.toString().equals(this.graph.getRouteLinks(this.a, this.d).toString()));
+        assert(this.le.toString().equals(this.graph.getRouteLinks(this.a, this.e).toString()));
+        assert(this.lf.toString().equals(this.graph.getRouteLinks(this.a, this.f).toString()));        
+        assert(this.lg.toString().equals(this.graph.getRouteLinks(this.a, this.g).toString()));
     }     
     
     

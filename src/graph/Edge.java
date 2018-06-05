@@ -113,7 +113,7 @@ public class Edge {
             return  "-";
         } 
         String prefix = this._isDirected ? "_" : "";
-        return prefix + this.element.toString();
+        return prefix + String.valueOf(this.element);
     }
     
     @Override

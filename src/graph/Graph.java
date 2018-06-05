@@ -8,6 +8,7 @@ package graph;
 import exceptions.NotImplementedException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
@@ -304,21 +305,133 @@ public class Graph {
     }
     
     
+    
+    private Collection<Vertex> convertLinkToRouteVector(DijkstraLink link, Vertex from){
+        Vector<Vertex> vector = new Vector<Vertex>();
+        return convertLinkToRouteVector(link, from, vector);
+    } 
+    
+    private Collection<Vertex> convertLinkToRouteVector(DijkstraLink link, Vertex from, Collection<Vertex> vector){
+        if (from == link.getVertex()){
+            vector.add(from);
+            return vector;
+        }
+        this.convertLinkToRouteVector(link.getPrevious(), from, vector);
+        vector.add(link.getVertex());
+        return vector;
+    }    
+    
     public Collection<Vertex> getRoute(Vertex from, Vertex to){
-        throw new NotImplementedException();
+        Vector<DijkstraLink> links = (Vector<DijkstraLink>) this.getAllRoutesLinks(from);
+        DijkstraLink link = this.getLink(links, to);
+        return this.convertLinkToRouteVector(link, from);
     }
     
-    public Collection<Collection<Vertex>> getAllRoutes(Vertex from){
-        throw new NotImplementedException();
+    public Vector<Vector<Vertex>> getAllRoutes(Vertex from){
+        Vector<DijkstraLink> links = (Vector<DijkstraLink>) this.getAllRoutesLinks(from);
+        Vector<Vector<Vertex>> retrn = new Vector<Vector<Vertex>>();
+        
+        for (DijkstraLink link : links){
+            retrn.add((Vector<Vertex>) this.convertLinkToRouteVector(link, from));
+        }
+        return retrn;
     }
         
     public DijkstraLink getRouteLinks(Vertex from, Vertex to){
-        throw new NotImplementedException();
+        return this.getLink(this.getAllRoutesLinks(from), to);
     }
     
     public Collection<DijkstraLink> getAllRoutesLinks(Vertex from){
-        throw new NotImplementedException();
+        Vector<DijkstraLink> links = new Vector<DijkstraLink>();
+        links.add(new DijkstraLink(this, from, null, 0.0));
+        DijkstraLink rootLink = links.get(0);
+        rootLink.setPrevious(rootLink);
+        
+        Vector<Vertex> allVertexesButFrom = (Vector) this.vertexes.clone();
+        allVertexesButFrom.remove(from);
+        
+        for (Vertex vertex : allVertexesButFrom){
+            links.add(new DijkstraLink(this, vertex, null));
+        }
+        
+        return this.getAllRoutesLinks(links);
     }
+    
+    private Collection<DijkstraLink> getAllRoutesLinks(Collection<DijkstraLink> links){
+        
+        DijkstraLink link = this.getNextLinkToAnalize(links);
+        if (link == null) return links;
+        
+        for (Vertex vertex : this.getAdjacentVertexes(link.getVertex())){
+            double newCost = link.getCost() + this.getCostToAdjacentVertex(link.getVertex(), vertex);
+            this.updateLinkIfRouteIsBetter(links, vertex, link, newCost);
+        }
+        
+        link.setAnalized();
+        Collections.sort((Vector) links);
+        return this.getAllRoutesLinks(links);
+    }  
+    
+    private DijkstraLink getNextLinkToAnalize(Collection<DijkstraLink> links){
+        for (DijkstraLink link : links){
+            if (!link.wasAnalized()){
+                return link;
+            }
+        }
+        return null;        
+    }
+    
+    private DijkstraLink getLink(Collection<DijkstraLink> links, Vertex vertex){
+        for (DijkstraLink link : links){
+            if (link.getVertex() == vertex){
+                return link;
+            }
+        }
+        throw new IllegalArgumentException("There's no Link related to this Vertex");  
+    }
+    
+    private void updateLinkIfRouteIsBetter(Collection<DijkstraLink> links, Vertex vertex, DijkstraLink previous, Double cost){
+        for (DijkstraLink link : links){
+            if (link.getVertex() == vertex){
+                if (cost < link.getCost()){
+                    link.setPrevious(previous);
+                    link.setCost(cost);
+                }
+                return;    
+            }
+        }
+    }
+    
+    public Collection<Vertex> getAdjacentVertexes(Vertex vertex){
+        
+        HashSet<Vertex> brothers = new HashSet<Vertex>();
+        for (Edge edge : this.getEdges(vertex)){
+            if (!edge.isDirected() || edge.getFrom() == vertex){
+                brothers.add(edge.getFrom());
+                brothers.add(edge.getTo());
+            }
+        }
+        brothers.remove(vertex);
+        return brothers;        
+    }
+    
+    public Double getCostToAdjacentVertex(Vertex from, Vertex to){
+        if (!this.areAdjacent(from, to)){
+            throw new IllegalArgumentException("The Vertexex are not Adjancent");             
+        }
+        
+        Edge selected = null;
+        for (Edge edge : this.getEdges(from)){
+            if (edge.getTo() == to || !edge.isDirected() && edge.getFrom() == to){
+                if (selected == null || (Double) edge.getElement() < (Double) selected.getElement()){
+                    selected = edge;
+                }
+            }
+        }
+        return (Double) selected.getElement();        
+    }
+    
+    
     
     
 }
