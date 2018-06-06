@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="CoinPC" name="graph.GraphTest" skipped="0" tests="9" time="0.053" timestamp="2018-06-05T18:01:22">
+<testsuite errors="0" failures="0" hostname="CoinPC" name="graph.GraphTest" skipped="0" tests="9" time="0.052" timestamp="2018-06-06T19:19:41">
   <properties>
     <property name="netbeans.autoupdate.country" value="US" />
     <property name="nb.wait.for.caches" value="true" />
@@ -39,7 +39,7 @@
     <property name="user.name" value="coinbr" />
     <property name="copylibs.rebase" value="true" />
     <property name="libs.swing-layout.maven-pom" value="" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner graph.GraphTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/home/coinbr/NetBeansProjects/school-graph/build/test/results/TEST-graph.GraphTest.xml crashfile=/home/coinbr/NetBeansProjects/school-graph/build/junitvmwatcher8731584899936190341.properties propsfile=/home/coinbr/NetBeansProjects/school-graph/build/junit2167330116590905259.properties" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner graph.GraphTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/home/coinbr/NetBeansProjects/school-graph/build/test/results/TEST-graph.GraphTest.xml crashfile=/home/coinbr/NetBeansProjects/school-graph/build/junitvmwatcher6695049867574195397.properties propsfile=/home/coinbr/NetBeansProjects/school-graph/build/junit5571808337564679430.properties" />
     <property name="build.classes.dir" value="build/classes" />
     <property name="netbeans.accept_license_class" value="org.netbeans.license.AcceptLicense" />
     <property name="build.sysclasspath" value="ignore" />
@@ -321,12 +321,12 @@
   <testcase classname="graph.GraphTest" name="testGetEdges" time="0.002" />
   <testcase classname="graph.GraphTest" name="testAddEdge" time="0.0" />
   <testcase classname="graph.GraphTest" name="testPrint" time="0.001" />
-  <testcase classname="graph.GraphTest" name="testGetAllEdges" time="0.0" />
-  <testcase classname="graph.GraphTest" name="testGetVertexDegree" time="0.001" />
-  <testcase classname="graph.GraphTest" name="testDelVertex" time="0.0" />
+  <testcase classname="graph.GraphTest" name="testGetAllEdges" time="0.001" />
+  <testcase classname="graph.GraphTest" name="testGetVertexDegree" time="0.0" />
+  <testcase classname="graph.GraphTest" name="testDelVertex" time="0.001" />
   <testcase classname="graph.GraphTest" name="testAddVertex" time="0.001" />
-  <testcase classname="graph.GraphTest" name="testDelEdge" time="0.001" />
-  <testcase classname="graph.GraphTest" name="testAreAdjacent" time="0.001" />
+  <testcase classname="graph.GraphTest" name="testDelEdge" time="0.0" />
+  <testcase classname="graph.GraphTest" name="testAreAdjacent" time="0.0" />
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

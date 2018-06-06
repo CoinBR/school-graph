@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 import graph.MakePublicHelper;
 import graph.Vertex;
 import graph.Graph;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,7 +25,7 @@ import java.util.Vector;
  *
  * @author coinbr
  */
-public class GraphDijkstraTest {
+public class GraphDijkstraDFS_BFSTest {
     
     static private MakePublicHelper mp;
     private Graph graph;
@@ -59,7 +60,7 @@ public class GraphDijkstraTest {
     private Vector<Vector<Vertex>> allRoutes;
     private Vector<DijkstraLink> allLinks;  
     
-    public GraphDijkstraTest() {
+    public GraphDijkstraDFS_BFSTest() {
     }
     
     @BeforeClass
@@ -198,7 +199,21 @@ public class GraphDijkstraTest {
         assert(this.le.toString().equals(this.graph.getRouteLinks(this.a, this.e).toString()));
         assert(this.lf.toString().equals(this.graph.getRouteLinks(this.a, this.f).toString()));        
         assert(this.lg.toString().equals(this.graph.getRouteLinks(this.a, this.g).toString()));
-    }     
+    } 
+
+    @org.junit.Test
+    public void testReadTextFile() throws IOException{     
+        String s = graph.readFile("labirinto.dat"); 
+        System.out.println(s);
+    }
+    
+    
+    @org.junit.Test
+    public void testDFS() {     
+        //assert(this.graph.DFS(this.a, this.g).toString().equals());
+    }
+    
+    
     
     
     

@@ -11,16 +11,16 @@ import java.util.Collection;
  *
  * @author coinbr
  */
-public class Edge {
+public class Edge implements Comparable<Edge>{
     
     private Graph graph;
     private Vertex from;
     private Vertex to;
-    private Object element;
+    private Comparable element;
     private Boolean _isDirected;
 
     
-    public Edge(Graph graph, Vertex from, Vertex to, Object element, Boolean _isDirected) {
+    public Edge(Graph graph, Vertex from, Vertex to, Comparable element, Boolean _isDirected) {
         this.graph = graph;
         this.from = from;
         this.to = to;
@@ -28,7 +28,7 @@ public class Edge {
         this._isDirected = _isDirected;
     } 
     
-    public Edge(Graph graph, Vertex from, Vertex to, Object element) {
+    public Edge(Graph graph, Vertex from, Vertex to, Comparable element) {
         this.graph = graph;
         this.from = from;
         this.to = to;
@@ -36,7 +36,7 @@ public class Edge {
         this._isDirected = false;
     }
 
-    public Edge(Graph graph, Object element) {
+    public Edge(Graph graph, Comparable element) {
         this.graph = graph;
         
         if (element != null) {
@@ -44,7 +44,8 @@ public class Edge {
             err += " only. Please, pass the graph and a explicit null as arguments";
             throw new IllegalArgumentException("This constructor is meant");
         }
-        this.element = this.from = this.to = null;
+        this.element = null;
+        this.from = this.to = null;
         this._isDirected = null;
     }
 
@@ -56,11 +57,11 @@ public class Edge {
         return from;
     }
 
-    public void setElement(Object element) {
+    public void setElement(Comparable element) {
         this.element = element;
     }
     
-    public void changeElement(Object element) {
+    public void changeElement(Comparable element) {
         this.setElement(element);
     }
   
@@ -89,7 +90,7 @@ public class Edge {
         return to;
     }
 
-    public Object getElement() {
+    public Comparable getElement() {
         return element;
     }  
 
@@ -124,7 +125,12 @@ public class Edge {
         s += this.to + "(" + this.element + ")>";
         return s;
     }
-    
-    
-    
+
+    @Override
+    public int compareTo(Edge o) {
+        return this.getElement().compareTo(o.getElement());
+    }
+        
+ 
+        
 }

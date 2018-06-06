@@ -6,10 +6,15 @@
 package graph;
 
 import exceptions.NotImplementedException;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
@@ -120,12 +125,12 @@ public class Graph {
         return !edge1.isNull() || !edge2.isNull();                        
     }
     
-    public Vertex changeElement(Vertex vertex, Object el){
+    public Vertex changeElement(Vertex vertex, Comparable el){
         vertex.changeElement(el);
         return vertex;
     }
     
-    public Edge changeElement(Edge edge, Object el){
+    public Edge changeElement(Edge edge, Comparable el){
         edge.changeElement(el);
         return edge;
     }
@@ -179,15 +184,15 @@ public class Graph {
        this.matrix[x][y] = baseVector;
     }
     
-    public Edge addEdge(Vertex v1, Vertex v2, Object el){
+    public Edge addEdge(Vertex v1, Vertex v2, Comparable el){
         return this.addEdge(v1, v2, el, false);
     }   
     
-    public Edge addDirectedEdge(Vertex v1, Vertex v2, Object el){
+    public Edge addDirectedEdge(Vertex v1, Vertex v2, Comparable el){
         return this.addEdge(v1, v2, el, true);
     }
     
-    public Edge addEdge(Vertex v1, Vertex v2, Object el, Boolean isDirected){
+    public Edge addEdge(Vertex v1, Vertex v2, Comparable el, Boolean isDirected){
         Edge edge = new Edge(this, v1, v2, el, isDirected);
         
         int x = this.vertexes.indexOf(v1);
@@ -242,6 +247,13 @@ public class Graph {
         return edge.getElement();
     }
     
+    
+    public Collection<Edge> getSortedEdges(Vertex vertex){
+        Vector<Edge> edgeVector = new Vector<Edge>(this.getEdges(vertex));
+        Collections.sort((Vector) edgeVector);
+        return edgeVector;        
+    }    
+    
     public Collection<Edge> getEdges(Vertex vertex){
         HashSet<Edge> edges = new HashSet<Edge>();
         for (int x = 0; x < this.vertexes.size(); x++){
@@ -256,22 +268,9 @@ public class Graph {
                  if (edge.getMatrixValue() != "-"){
                      edges.add(edge);
                  }
-            }          
-            
+            }            
         }
-        return edges;   
-        
-        /*
-            
-    public Collection<Edge> getEdges(Vertex vertex){
-        HashSet<Edge> edges = new HashSet<Edge>();
-        for (Edge edge : this.getAllEdges()){
-            if (edge.getFrom() == vertex || edge.getTo() == vertex){
-                edges.add(edge);
-            }
-        }
-        
-        */
+        return edges;
     }
     
     
@@ -432,6 +431,13 @@ public class Graph {
     }
     
     
-    
+        // https://stackoverflow.com/questions/326390/how-do-i-create-a-java-string-from-the-contents-of-a-file
+        public static String readFile(String path) throws IOException 
+        {
+          byte[] encoded = Files.readAllBytes(Paths.get("inputs/" + path));
+          return new String(encoded, Charset.forName("UTF-8"));
+        }
+        
+            
     
 }
