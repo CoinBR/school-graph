@@ -25,7 +25,7 @@ import java.util.Vector;
  *
  * @author coinbr
  */
-public class GraphDijkstraDFS_BFSTest {
+public class GraphDijkstraTest {
     
     static private MakePublicHelper mp;
     private Graph graph;
@@ -60,7 +60,7 @@ public class GraphDijkstraDFS_BFSTest {
     private Vector<Vector<Vertex>> allRoutes;
     private Vector<DijkstraLink> allLinks;  
     
-    public GraphDijkstraDFS_BFSTest() {
+    public GraphDijkstraTest() {
     }
     
     @BeforeClass
@@ -204,12 +204,11 @@ public class GraphDijkstraDFS_BFSTest {
     @org.junit.Test
     public void testReadTextFile() throws IOException{     
         String s = graph.readFile("labirinto.dat"); 
-        System.out.println(s);
     }
     
     
     @org.junit.Test
-    public void testDFS() {     
+    public void testDFS() {
         //assert(this.graph.DFS(this.a, this.g).toString().equals());
     }
     

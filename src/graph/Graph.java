@@ -15,8 +15,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Set;
+import java.util.Stack;
 import java.util.Vector;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  *
@@ -403,14 +407,17 @@ public class Graph {
     
     public Collection<Vertex> getAdjacentVertexes(Vertex vertex){
         
-        HashSet<Vertex> brothers = new HashSet<Vertex>();
-        for (Edge edge : this.getEdges(vertex)){
-            if (!edge.isDirected() || edge.getFrom() == vertex){
-                brothers.add(edge.getFrom());
-                brothers.add(edge.getTo());
+        Vector<Vertex> brothers = new Vector<Vertex>();
+        for (Edge edge : this.getSortedEdges(vertex)){
+            Vertex toAdd;
+            if (edge.isDirected()){
+                toAdd = edge.getTo();
             }
+            else {
+                toAdd = edge.getFrom() == vertex ? edge.getTo() : edge.getFrom();
+            }
+            brothers.add(toAdd);            
         }
-        brothers.remove(vertex);
         return brothers;        
     }
     
@@ -437,6 +444,63 @@ public class Graph {
           byte[] encoded = Files.readAllBytes(Paths.get("inputs/" + path));
           return new String(encoded, Charset.forName("UTF-8"));
         }
+
+    private Collection<Vertex> DFSCalc(Vertex vertex, Vertex to, Vector<Vertex> path) {
+        // Transverse all the Graph if (to == null)
+        
+        // Stop when reach the last element. If to is null, it will tranverse the whole graph
+        if (path.isEmpty() || path.lastElement() != to){
+        
+            path.add(vertex);
+            
+            for (Vertex brother : this.getAdjacentVertexes(vertex)){
+                if (!path.contains(brother)){
+                    
+                    this.DFSCalc(brother, to, path);
+                }
+            
+            }
+        }
+        return path;
+    }    
+        
+    
+   private Collection<Vertex> BFSCalc(Vertex to, Vector<Vertex> path, Queue<Vertex> qu) {
+        // Transverse all the Graph if (to == null)
+              
+        Vertex vertex = qu.poll();    
+        if (vertex == null) return path;
+        path.add(vertex);
+        if (!path.isEmpty() && path.lastElement() == to) return path;      
+            
+        for (Vertex brother : this.getAdjacentVertexes(vertex)){
+            if (!path.contains(brother)){
+                qu.add(brother);
+            }            
+        }
+        return this.BFSCalc(to, path, qu);
+    }        
+    
+    public Collection<Vertex> DFS(Vertex vertex) {
+        return this.DFS(vertex, null);
+    }  
+    
+    public Collection<Vertex> DFS(Vertex from, Vertex to) {
+        return this.DFSCalc(from, to, new Vector<Vertex>());
+    }    
+    
+    public Collection<Vertex> BFS(Vertex vertex) {
+        return this.BFS(vertex, null);
+    }  
+    
+    public Collection<Vertex> BFS(Vertex from, Vertex to) {
+        Queue<Vertex> qu = new LinkedBlockingQueue<Vertex>();
+        qu.add(from);
+        Vector<Vertex> path = new Vector<Vertex>();
+        return this.BFSCalc(to, path, qu);
+    }  
+    
+ 
         
             
     
