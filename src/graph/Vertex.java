@@ -5,20 +5,18 @@
  */
 package graph;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Vector;
 
 /**
  *
  * @author coinbr
  */
-public class Vertex {
+public class Vertex implements Comparable<Vertex> {
     
     private Graph graph;
-    private Object element;
+    private Comparable element;
 
-    public Vertex(Graph graph, Object el) {
+    public Vertex(Graph graph, Comparable el) {
         this.graph = graph;
         this.element = el;
     }
@@ -28,11 +26,11 @@ public class Vertex {
         return this.element.toString();
     }
 
-    public void setElement(Object element) {
+    public void setElement(Comparable element) {
         this.element = element;
     }
     
-    public void changeElement(Object element) {
+    public void changeElement(Comparable element) {
         this.setElement(element);
     }
 
@@ -40,7 +38,7 @@ public class Vertex {
         return graph;
     }
 
-    public Object getElement() {
+    public Comparable getElement() {
         return element;
     }
     
@@ -62,6 +60,13 @@ public class Vertex {
         }
         return degree;        
     }
+
+    @Override
+    public int compareTo(Vertex o) {       
+        return this.getElement().compareTo(o.getElement());
+    }
+
+
     
 
     

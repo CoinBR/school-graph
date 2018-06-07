@@ -167,7 +167,7 @@ public class Graph {
         
     }
     
-    public Vertex addVertex(Object el){       
+    public Vertex addVertex(Comparable el){       
         Vertex vertex = new Vertex(this, el);
         this.vertexes.add(vertex);
         this.growMatrixIfNecessary();
@@ -208,7 +208,7 @@ public class Graph {
         return edge;        
     }
     
-    public Object delVertex(Vertex vertex){
+    public Comparable delVertex(Vertex vertex){
         int oldSize = this.vertexes.size();       
         int toDel = this.vertexes.indexOf(vertex);
         this.vertexes.remove(toDel);
@@ -235,7 +235,7 @@ public class Graph {
         } 
     }
     
-    public Object delEdge(Edge edge){
+    public Comparable delEdge(Edge edge){
         Integer fromIndex = edge.getFrom().getIndex();
         Integer toIndex = edge.getTo().getIndex();
         
@@ -405,18 +405,23 @@ public class Graph {
         }
     }
     
+    public Collection<Vertex> getExitVertexes(Vertex vertex){
+        // Vertexes that you can go from Vertex
+        Vector<Vertex> brothers = new Vector<Vertex>();
+        for (Edge edge : this.getSortedEdges(vertex)){
+            Vertex toAdd;
+            if (!edge.isDirected() || edge.getFrom() == vertex){
+                brothers.add(this.getOppositeVertex(edge, vertex));
+            }             
+        }
+        return brothers;  
+    }
+    
     public Collection<Vertex> getAdjacentVertexes(Vertex vertex){
         
         Vector<Vertex> brothers = new Vector<Vertex>();
         for (Edge edge : this.getSortedEdges(vertex)){
-            Vertex toAdd;
-            if (edge.isDirected()){
-                toAdd = edge.getTo();
-            }
-            else {
-                toAdd = edge.getFrom() == vertex ? edge.getTo() : edge.getFrom();
-            }
-            brothers.add(toAdd);            
+                brothers.add(this.getOppositeVertex(edge, vertex));           
         }
         return brothers;        
     }
@@ -453,7 +458,7 @@ public class Graph {
         
             path.add(vertex);
             
-            for (Vertex brother : this.getAdjacentVertexes(vertex)){
+            for (Vertex brother : this.getExitVertexes(vertex)){
                 if (!path.contains(brother)){
                     
                     this.DFSCalc(brother, to, path);
@@ -467,14 +472,13 @@ public class Graph {
     
    private Collection<Vertex> BFSCalc(Vertex to, Vector<Vertex> path, Queue<Vertex> qu) {
         // Transverse all the Graph if (to == null)
-              
         Vertex vertex = qu.poll();    
         if (vertex == null) return path;
         path.add(vertex);
         if (!path.isEmpty() && path.lastElement() == to) return path;      
             
-        for (Vertex brother : this.getAdjacentVertexes(vertex)){
-            if (!path.contains(brother)){
+        for (Vertex brother : this.getExitVertexes(vertex)){
+            if (!path.contains(brother) && !qu.contains(brother)){
                 qu.add(brother);
             }            
         }

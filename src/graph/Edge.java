@@ -6,6 +6,7 @@
 package graph;
 
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  *
@@ -128,7 +129,22 @@ public class Edge implements Comparable<Edge>{
 
     @Override
     public int compareTo(Edge o) {
-        return this.getElement().compareTo(o.getElement());
+        Integer compareEdgeCosts = this.getElement().compareTo(o.getElement());
+        
+        if (compareEdgeCosts != 0) return compareEdgeCosts;
+        if (this.from.compareTo(o.from) != 0) return this.from.compareTo(o.from);
+        return this.to.compareTo(o.to);     
+
+        /*
+
+        
+        if (compareEdgeCosts == 0){
+            Vertex smallVertexThis = this.from.compareTo(this.to) <= 0 ? this.from : this.to;
+            Vertex smallVertexO = o.from.compareTo(o.to) < 0 ? o.from : o.to;
+            return smallVertexThis.compareTo(smallVertexO);            
+        }
+        return compareEdgeCosts;  
+        */
     }
         
  

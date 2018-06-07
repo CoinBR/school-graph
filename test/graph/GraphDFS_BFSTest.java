@@ -25,11 +25,11 @@ import java.util.Vector;
  *
  * @author coinbr
  */
-public class GraphDFSTest {
-    
+public class GraphDFS_BFSTest {
+
     static private MakePublicHelper mp;
     private Graph graph;
-    
+
     // Vertexes
     private Vertex a;
     private Vertex b;
@@ -38,7 +38,7 @@ public class GraphDFSTest {
     private Vertex e;
     private Vertex f;
     private Vertex g;
-    
+
     // Routes
     private Vector<Vertex> ra;
     private Vector<Vertex> rb;
@@ -47,31 +47,31 @@ public class GraphDFSTest {
     private Vector<Vertex> re;
     private Vector<Vertex> rf;
     private Vector<Vertex> rg;
-    
+
     // Dijkstra`s Links
     private DijkstraLink la;
-    private DijkstraLink lb; 
+    private DijkstraLink lb;
     private DijkstraLink lc;
-    private DijkstraLink ld; 
+    private DijkstraLink ld;
     private DijkstraLink le;
-    private DijkstraLink lf; 
+    private DijkstraLink lf;
     private DijkstraLink lg;
-    
+
     private Vector<Vector<Vertex>> allRoutes;
-    private Vector<DijkstraLink> allLinks;  
-    
-    public GraphDFSTest() {
+    private Vector<DijkstraLink> allLinks;
+
+    public GraphDFS_BFSTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
         mp = new MakePublicHelper();
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
         // The Graph: (Image)
@@ -84,21 +84,20 @@ public class GraphDFSTest {
         this.e = this.graph.addVertex(new String("E"));
         this.f = this.graph.addVertex(new String("F"));
         this.g = this.graph.addVertex(new String("G"));
-        
+
         this.graph.addEdge(a, c, 5.0);
         this.graph.addEdge(b, d, 8.0);
         this.graph.addEdge(c, e, 2.0);
         this.graph.addEdge(c, g, 13.0);
         this.graph.addEdge(d, e, 7.0);
-        this.graph.addEdge(d, f, 4.0);        
+        this.graph.addEdge(d, f, 4.0);
 
     }
-    
+
     @After
     public void tearDown() {
     }
-
-
+    
     @org.junit.Test
     public void testDFSAll() {
         Vector<Vertex> ref = new Vector<Vertex>();
@@ -109,9 +108,9 @@ public class GraphDFSTest {
         ref.add(d);
         ref.add(f);
         ref.add(b);
-        assert(this.graph.DFS(this.e).toString().equals(ref.toString()));
+        assert (this.graph.DFS(this.e).toString().equals(ref.toString()));
     }
-    
+
     @org.junit.Test
     public void testDFS() {
         Vector<Vertex> ref = new Vector<Vertex>();
@@ -122,7 +121,7 @@ public class GraphDFSTest {
         ref.add(b);
         // System.out.println(this.graph.DFS(this.c, this.b));
         // System.out.println(ref);
-        assert(this.graph.DFS(this.c, this.b).toString().equals(ref.toString()));
+        assert (this.graph.DFS(this.c, this.b).toString().equals(ref.toString()));
     }
 
     @org.junit.Test
@@ -136,10 +135,11 @@ public class GraphDFSTest {
         ref.add(f);
         ref.add(b);
         // System.out.println(this.graph.BFS(this.c));
-       //  System.out.println(ref);        
-        assert(this.graph.BFS(this.c).toString().equals(ref.toString()));
-    }  
-    
+        // System.out.println(ref);        
+        assert (this.graph.BFS(this.c).toString().equals(ref.toString()));
+    }
+     
+
     @org.junit.Test
     public void testBFS() {
         Vector<Vertex> ref = new Vector<Vertex>();
@@ -150,9 +150,9 @@ public class GraphDFSTest {
         ref.add(d);
         //System.out.println(this.graph.BFS(this.c, this.d));
         //System.out.println(ref);        
-        assert(this.graph.BFS(this.c, this.d).toString().equals(ref.toString()));
-    }    
+        assert (this.graph.BFS(this.c, this.d).toString().equals(ref.toString()));
+    }
     
-    
-    
+
+
 }
