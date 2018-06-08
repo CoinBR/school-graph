@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.Vector;
 import java.util.concurrent.LinkedBlockingQueue;
+import graph.VertexDegreeComparator;
 
 /**
  *
@@ -284,9 +285,19 @@ public class Graph {
     
     public Collection<Vertex> getAllVertexes(){
         return this.vertexes;
-    }
+    } 
     
-
+    public Collection<Vertex> getAllVertexesSorted(){
+        Vector<Vertex> sorted = (Vector<Vertex>) this.vertexes.clone();
+        Collections.sort(sorted);
+        return sorted;
+    }  
+    
+    public Collection<Vertex> getAllVertexesSortedByDegree(){
+        Vector<Vertex> vec = (Vector<Vertex>) this.getAllVertexesSorted();
+        Collections.sort(vec, new VertexDegreeComparator());
+        return vec;
+    }
     
     public Collection<Edge> getAllEdges(){
         HashSet<Edge> edges = new HashSet<Edge>();

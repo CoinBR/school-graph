@@ -13,6 +13,7 @@ import org.junit.BeforeClass;
 import graph.MakePublicHelper;
 import graph.Vertex;
 import graph.Graph;
+import java.lang.reflect.InvocationTargetException;
 
 import java.util.Vector;
 
@@ -34,6 +35,9 @@ public class GraphColorTest {
     private Vertex v3;
     private Vertex v2;
     private Vertex v1;
+    
+    private ColorsInfo colorsTest; 
+    private ColorsInfo colors;
 
 
 
@@ -53,118 +57,107 @@ public class GraphColorTest {
     public void setUp() {
         // The Graph: (Image)
         // https://imgur.com/a/kTyVIqy
-        
+    
         Graph myGraph = new Graph();
-        
-        this.v8 = myGraph.addVertex(new String("8"));        
-        this.v7 = myGraph.addVertex(new String("7"));
-        this.v6 = myGraph.addVertex(new String("6"));
-        this.v5 = myGraph.addVertex(new String("5"));
-        this.v4 = myGraph.addVertex(new String("4"));
-        this.v3 = myGraph.addVertex(new String("3"));
-        this.v2 = myGraph.addVertex(new String("2"));
-        this.v1 = myGraph.addVertex(new String("1"));
+ 
+        this.v8 = myGraph.addVertex(new String("v8"));        
+        this.v7 = myGraph.addVertex(new String("v7"));
+        this.v6 = myGraph.addVertex(new String("v6"));
+        this.v5 = myGraph.addVertex(new String("v5"));
+        this.v4 = myGraph.addVertex(new String("v4"));
+        this.v3 = myGraph.addVertex(new String("v3"));
+        this.v2 = myGraph.addVertex(new String("v2"));
+        this.v1 = myGraph.addVertex(new String("v1"));
       
-        myGraph.addEdge(v1, v2, 1.0, true);          
-        myGraph.addEdge(v1, v4, 1.0, true);           
-        myGraph.addEdge(v2, v4, 1.0, true);          
-        myGraph.addEdge(v2, v5, 1.0, true);          
-        myGraph.addEdge(v3, v1, 1.0, true);          
-        myGraph.addEdge(v3, v6, 1.0, true);          
-        myGraph.addEdge(v4, v3, 1.0, true);          
-        myGraph.addEdge(v4, v5, 1.0, true);          
-        myGraph.addEdge(v4, v6, 1.0, true);          
-        myGraph.addEdge(v4, v7, 1.0, true);          
-        myGraph.addEdge(v5, v7, 1.0, true);          
-        myGraph.addEdge(v7, v6, 1.0, true); 
+        myGraph.addEdge(v1, v2, 1.0);          
+        myGraph.addEdge(v1, v4, 1.0);           
+        myGraph.addEdge(v2, v3, 1.0);            
+        myGraph.addEdge(v2, v5, 1.0);          
+        myGraph.addEdge(v3, v4, 1.0);          
+        myGraph.addEdge(v3, v6, 1.0);          
+        myGraph.addEdge(v4, v7, 1.0);          
+        myGraph.addEdge(v5, v6, 1.0);          
+        myGraph.addEdge(v5, v8, 1.0);          
+        myGraph.addEdge(v6, v7, 1.0);          
+        myGraph.addEdge(v6, v8, 1.0);          
+        myGraph.addEdge(v7, v8, 1.0);
         
         this.graph = myGraph;
+        this.colorsTest = new ColorsInfo(new Graph(), true);
+        this.colors = new ColorsInfo(myGraph, false);
     }
 
     @After
     public void tearDown() {
-    }
+    } 
     
-   
-
     @org.junit.Test
-    public void testBFSAllColeguinha1() {
-        Vector<Vertex> ref = new Vector<Vertex>();
-        ref.add(v1);
-        ref.add(v2);
-        ref.add(v4);
-        ref.add(v5);
-        ref.add(v3);
-        ref.add(v6);
-        ref.add(v7);
+    public void testAddVertex() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, InvocationTargetException, NoSuchMethodException {
+        Vector<Vector<Vertex>> ref = new Vector<Vector<Vertex>>();
         
-        String result = this.graph.BFS(v1).toString();        
-        //System.out.println(result);
-        //System.out.println(ref);        
-        assert (result.equals(ref.toString()));
+        ref.add(new Vector<Vertex>());
+        ref.get(0).add(v1);
+        mp.invoke(this.colorsTest, "addVertex", v1, 0);
+        assert(this.colorsTest.getGroups().toString().equals(ref.toString()));
+        
+        
+        ref.add(new Vector<Vertex>());
+        ref.add(new Vector<Vertex>());
+        ref.get(2).add(v6);
+        mp.invoke(this.colorsTest, "addVertex", v6, 2);
+        assert(this.colorsTest.getGroups().toString().equals(ref.toString()));        
+        
+     
+        ref.get(0).add(v3);
+        mp.invoke(this.colorsTest, "addVertex", v3, 0);
+        assert(this.colorsTest.getGroups().toString().equals(ref.toString()));        
+    }   
+    
+    @org.junit.Test
+    public void testGetNumColors() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, InvocationTargetException, NoSuchMethodException {
+        Vector<Vector<Vertex>> ref = new Vector<Vector<Vertex>>();
+        
+        assert(this.colorsTest.getNumColors() == 1);  
+        mp.invoke(this.colorsTest, "addVertex", v1, 0);
+        mp.invoke(this.colorsTest, "addVertex", v3, 0);
+        
+        
+        assert(this.colorsTest.getNumColors() == 1);
+        mp.invoke(this.colorsTest, "addVertex", v2, 1);
+        mp.invoke(this.colorsTest, "addVertex", v4, 1);
+        mp.invoke(this.colorsTest, "addVertex", v8, 1);
+        
+        assert(this.colorsTest.getNumColors() == 2);
+        mp.invoke(this.colorsTest, "addVertex", v6, 2);
+        assert(this.colorsTest.getNumColors() == 3);        
     }  
     
     @org.junit.Test
-    public void testBFSAllColeguinha5() {
-        Vector<Vertex> ref = new Vector<Vertex>();
-        ref.add(v5);
-        ref.add(v7);
-        ref.add(v6);
+    public void testToString() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, InvocationTargetException, NoSuchMethodException {
+       
+  
+        mp.invoke(this.colorsTest, "addVertex", v1, 0);
+        mp.invoke(this.colorsTest, "addVertex", v3, 0);
+        mp.invoke(this.colorsTest, "addVertex", v2, 1);
+        mp.invoke(this.colorsTest, "addVertex", v4, 1);
+        mp.invoke(this.colorsTest, "addVertex", v8, 1);
+        mp.invoke(this.colorsTest, "addVertex", v6, 2);       
         
-        String result = this.graph.BFS(v5).toString();        
-        //System.out.println(result);
-        //System.out.println(ref);        
-        assert (result.equals(ref.toString()));
+        String ref = "[ 3 Colors: 0(v1 v3) 1(v2 v4 v8) 2(v6) ]";
+        String test = this.colorsTest.toString();
+        
+        //System.out.println(ref);
+        //System.out.println(test);
+        assert(ref.equals(test));    
     }    
     
     @org.junit.Test
-    public void testDFSAllColeguinha1() {
-        Vector<Vertex> ref = new Vector<Vertex>();
-        ref.add(v1);
-        ref.add(v2);
-        ref.add(v4);
-        ref.add(v3);
-        ref.add(v6);
-        ref.add(v5);
-        ref.add(v7);
-        
-        String result = this.graph.DFS(v1).toString();        
-        //System.out.println(result);
-        //System.out.println(ref);        
-        assert (result.equals(ref.toString()));
-    } 
-       
-    @org.junit.Test
-    public void testDFSAllColeguinha2() {
-        Vector<Vertex> ref = new Vector<Vertex>();
-        ref.add(v2);
-        ref.add(v4);
-        ref.add(v3);
-        ref.add(v1);
-        ref.add(v6);
-        ref.add(v5);
-        ref.add(v7);
-        
-        String result = this.graph.DFS(v2).toString(); 
-        // System.out.println(result);
-        // System.out.println(ref);        
-        assert (result.equals(ref.toString()));
-    }     
-    
- @org.junit.Test
-    public void testDFSAllColeguinha5() {
-        Vector<Vertex> ref = new Vector<Vertex>();
-        ref.add(v5);
-        ref.add(v7);
-        ref.add(v6);
-        
-        String result = this.graph.DFS(v5).toString();        
-        //System.out.println(result);
-        //System.out.println(ref);        
-        assert (result.equals(ref.toString()));
+    public void testProcess() {
+       String ref = "[ 3 Colors: 0(v1 v3 v5 v7) 1(v2 v4 v8) 2(v6) ]";
+       String test = this.colors.toString();
+       //System.out.println(ref);
+       //System.out.println(test);       
+       assert(ref.equals(test));
     }   
-
-    
-
 
 }

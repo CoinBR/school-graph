@@ -64,11 +64,5 @@ public class Vertex implements Comparable<Vertex> {
     @Override
     public int compareTo(Vertex o) {       
         return this.getElement().compareTo(o.getElement());
-    }
-
-
-    
-
-    
-    
+    }    
 }
