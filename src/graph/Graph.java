@@ -168,8 +168,12 @@ public class Graph {
         
     }
     
-    public Vertex addVertex(Comparable el){       
-        Vertex vertex = new Vertex(this, el);
+    public Vertex addVertex(Comparable el){
+       return this.addVertex(el, 1.0);
+    }  
+    
+    public Vertex addVertex(Comparable el, Double priority){       
+        Vertex vertex = new Vertex(this, el, priority);
         this.vertexes.add(vertex);
         this.growMatrixIfNecessary();
         return this.vertexes.lastElement();
@@ -334,6 +338,24 @@ public class Graph {
         vector.add(link.getVertex());
         return vector;
     }    
+  
+    public Corner getBestCorner(){
+        return this.getCornersRanking().get(0);
+    }
+    
+    public List<Corner> getCornersRanking(){
+        // Ambulance or Cop Car Police
+        
+        List<Corner> ranking = new Vector<Corner>();
+        
+        for (Vertex vertex : this.getAllVertexes()){
+            ranking.add(new Corner(vertex));
+            //System.out.println(ranking);
+        }
+        
+        Collections.sort(ranking);
+        return ranking;      
+    }
     
     public Collection<Vertex> getRoute(Vertex from, Vertex to){
         Vector<DijkstraLink> links = (Vector<DijkstraLink>) this.getAllRoutesLinks(from);
@@ -349,7 +371,7 @@ public class Graph {
             retrn.add((Vector<Vertex>) this.convertLinkToRouteVector(link, from));
         }
         return retrn;
-    }
+    }    
         
     public DijkstraLink getRouteLinks(Vertex from, Vertex to){
         return this.getLink(this.getAllRoutesLinks(from), to);

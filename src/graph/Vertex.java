@@ -15,11 +15,21 @@ public class Vertex implements Comparable<Vertex> {
     
     private Graph graph;
     private Comparable element;
+    private Double priority;
 
     public Vertex(Graph graph, Comparable el) {
         this.graph = graph;
         this.element = el;
+        this.priority = 1.0;
     }
+    
+    public Vertex(Graph graph, Comparable label, Double priority) {
+        if (priority < 1.0) throw new IllegalArgumentException("Vertex PRIORITY cannot be lesser than 1.0");
+        
+        this.graph = graph;
+        this.element = label;
+        this.priority = priority;        
+    }    
     
     @Override
     public String toString(){
@@ -45,7 +55,10 @@ public class Vertex implements Comparable<Vertex> {
     public Integer getIndex(){
         return this.graph.getVertexIndex(this);
     }
-    
+
+    public Double getPriority() {
+        return priority;
+    }
     // https://en.wikipedia.org/wiki/Degree_(graph_theory)
     // In graph theory, the degree (or valency) of a vertex of a graph is the number of edges incident to the vertex, with loops counted twice.
     
@@ -60,6 +73,8 @@ public class Vertex implements Comparable<Vertex> {
         }
         return degree;        
     }
+    
+    
 
     @Override
     public int compareTo(Vertex o) {       

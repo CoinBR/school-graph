@@ -5,6 +5,12 @@
  */
 package graph;
 
+import graph.Graph;
+import graph.Graph;
+import graph.Graph;
+import graph.Vertex;
+import graph.Vertex;
+import graph.Vertex;
 import java.util.Collection;
 import java.util.Vector;
 
@@ -97,8 +103,7 @@ public class ColorsInfo {
 
 
 
-    private void proccess() {
-        
+    private void proccess() {       
   
         Boolean added;
         for (Vertex vertex : this.graph.getAllVertexesSortedByDegree()){
